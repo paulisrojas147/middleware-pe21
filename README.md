@@ -112,7 +112,7 @@ Servidor corriendo en `http://localhost:3000`. Autenticacion: header `x-api-key:
 
 ## Validación del contrato OpenAPI
 
-Se ejecutó el comando `npx @redocly/cli lint openapi.yaml` para validar el contrato OpenAPI. El resultado final no presenta ningún error, por lo que el documento cumple con la estructura esperada.
+Se ejecutó el comando `npx @redocly/cli lint openapi.yaml` con el fin de validar el contrato OpenAPI. El resultado final no presenta ningún error, por lo que el documento cumple con la estructura esperada.
 
 ![Validación OpenAPI sin errores](docs/screenshots/05-lint-sin-errores.png)
 
