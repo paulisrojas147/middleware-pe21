@@ -106,3 +106,20 @@ Servidor corriendo en `http://localhost:3000`. Autenticacion: header `x-api-key:
 
 ![v2 400 valor inválido](docs/screenshots/04-v2-400-inválido.png)
 
+
+
+
+
+## Validación del contrato OpenAPI
+
+Se ejecutó el comando `npx @redocly/cli lint openapi.yaml` para validar el contrato OpenAPI. El resultado final no presenta ningún error, por lo que el documento cumple con la estructura esperada.
+
+![Validación OpenAPI sin errores](docs/screenshots/05-lint-sin-errores.png)
+
+
+
+
+
+## Reflexión sobre el contrato
+
+En caso de que otro equipo empezara a consumir mi API mañana o en el futuro, mejoraría el contrato OpenAPI añadiendo descripciones más detalladas en cada endpoint, ejemplos completos de respuestas exitosas y de error, y, también, códigos http de estado más específicos para cada caso. Así mismo, incluiría un esquema estándar para los errores, con el fin de que todos los consumidores reciban respuestas informativas y completas. Por último, mantendría la estrategia de versionado con las rutas `/v1/` y `/v2/`, evitando así cambios incompatibles en versiones que ya se han publicado y docuentando de manera clara las diferencias entre cada versión del contrato.
