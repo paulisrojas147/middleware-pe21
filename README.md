@@ -123,3 +123,52 @@ Se ejecutó el comando `npx @redocly/cli lint openapi.yaml` con el fin de valida
 ## Reflexión sobre el contrato
 
 En caso de que otro equipo empezara a consumir mi API mañana o en el futuro, mejoraría el contrato OpenAPI añadiendo descripciones más detalladas en cada endpoint, ejemplos completos de respuestas exitosas y de error, y, también, códigos http de estado más específicos para cada caso. Así mismo, incluiría un esquema estándar para los errores, con el fin de que todos los consumidores reciban respuestas informativas y completas. Por último, mantendría la estrategia de versionado con las rutas `/v1/` y `/v2/`, evitando así cambios incompatibles en versiones que ya se han publicado y docuentando de manera clara las diferencias entre cada versión del contrato.
+
+
+
+
+
+## Seguridad JWT (PE-2.3)
+
+### Generar un token de prueba
+
+```bash
+# Con el secreto por defecto del laboratorio:
+TOKEN=$(node generate-token.mjs)
+
+# Con secreto personalizado:
+JWT_SECRET=mi-secreto-largo TOKEN=$(node generate-token.mjs)
+```
+
+### Probar el servicio
+
+```bash
+# Peticion valida (esperado: 201)
+curl -X POST http://localhost:3000/v2/inscripciones \
+  -H "Authorization: Bearer $TOKEN" \
+  -H "Content-Type: application/json" \
+  -d '{"estudianteId":"uuid-123","materias":["LTI_05A_458"],"periodoId":"2026-1","payment_method":"scholarship"}'
+
+# Token invalido (esperado: 401)
+curl -X POST http://localhost:3000/v2/inscripciones \
+  -H "Authorization: Bearer token.invalido.xxx"
+```
+
+### Variables de entorno
+
+Copia `.env.example` a `.env` y configura `JWT_SECRET` con un valor secreto largo.
+
+
+### PRUEBAS EN POSTMAN
+
+### Prueba 1 — Token valido: esperado 201 Created
+
+![p1 201 Created](docs/screenshots/PE23_prueba1_201.png)
+
+### Prueba 2 — Firma invalida: esperado 401 Unauthorized
+
+![p2 401 Unauthorized](docs/screenshots/PE23_prueba2_401.png)
+
+### Prueba 3 — Token con alg:none: esperado 401 Unauthorized
+
+![p3 401 Unauthorized](docs/screenshots/PE23_prueba3_401.png)
